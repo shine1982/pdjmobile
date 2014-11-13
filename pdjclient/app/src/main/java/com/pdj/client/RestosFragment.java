@@ -20,7 +20,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.pdj.client.dummy.DummyContent;
 import com.pdj.client.utils.ModelNames;
 
 

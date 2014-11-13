@@ -14,8 +14,7 @@ import java.util.Map;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
-        RestosFragment.OnFragmentInteractionListener,
-        RestoFavoritesFragment.OnFragmentInteractionListener
+        RestosFragment.OnFragmentInteractionListener
 {
 
     ViewPager viewPager=null;
@@ -82,7 +81,7 @@ class MainPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i){
             case 0: return new RestosFragment();
-            case 1: return new RestoFavoritesFragment();
+            case 1: return new RestosFragment();
 
         }
 

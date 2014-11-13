@@ -13,6 +13,6 @@
         android:layout_alignParentLeft="true"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:background="#EEECEC"
+        android:background="#F9FFF6"
         />
 </RelativeLayout>
