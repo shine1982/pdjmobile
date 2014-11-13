@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GEO"
+        android:id="@+id/geoButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="5dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchText"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/geoButton"
+        android:layout_toRightOf="@id/geoButton"
+        android:layout_toLeftOf="@+id/searchBtn"
+        android:layout_toStartOf="@+id/searchBtn" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/searchBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/geoButton"
+        android:text="Les restaurants trouvés:"
+        android:layout_marginTop="5dp"
+        android:id="@+id/resultsTitle"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@android:id/list"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/resultsTitle"
+        android:background="#E7EEE7"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/resultsTitle"
+        android:id="@android:id/empty"
+        android:text="No data"
+        android:layout_margin="5dp"
+        />
+
+
+</RelativeLayout>

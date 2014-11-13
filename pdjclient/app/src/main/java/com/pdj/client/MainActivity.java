@@ -1,39 +1,100 @@
 package com.pdj.client;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+
+import java.util.List;
+import java.util.Map;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
+        RestosFragment.OnFragmentInteractionListener,
+        RestoFavoritesFragment.OnFragmentInteractionListener
+{
+
+    ViewPager viewPager=null;
+    ActionBar actionBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewPager = (ViewPager)findViewById(R.id.mainpager);
+
+        viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager()));
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int i) {
+                actionBar.setSelectedNavigationItem(i);
+            }
+        });
+
+        actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        final String[] tabTitles={"Les restaurants", "Mes favoris"};
+        for(int i=0;i <tabTitles.length; i++){
+            ActionBar.Tab tab =actionBar.newTab();
+            tab.setText(tabTitles[i]);
+            tab.setTabListener(this);
+            actionBar.addTab(tab);
+        }
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+        final String idResto = id;
+        Intent intent = new Intent(this, ArdoiseActivity.class);
+        intent.putExtra("idResto", idResto);
+        startActivity(intent);
+    }
+}
+class MainPageAdapter extends FragmentPagerAdapter {
+
+
+    public MainPageAdapter(android.support.v4.app.FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        switch (i){
+            case 0: return new RestosFragment();
+            case 1: return new RestoFavoritesFragment();
+
         }
 
-        return super.onOptionsItemSelected(item);
+        return null;
     }
+
+    @Override
+    public int getCount() {
+        return 2;
+    }
+
+
+
+
 }
