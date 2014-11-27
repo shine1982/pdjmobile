@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.pdj.client.screen.ardoise.ArdoiseFragment"
+    android:background="@drawable/border"
+    android:padding="15dp">
+
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ardoiseTitle"
+        android:gravity="center_horizontal"
+        android:text="Pas d'ardoise défini pour ce jour :-( "
+        android:textColor="@android:color/white"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_alignTop="@+id/ardoiseTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"/>
+
+
+</FrameLayout>

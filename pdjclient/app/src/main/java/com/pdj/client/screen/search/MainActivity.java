@@ -1,4 +1,4 @@
-package com.pdj.client;
+package com.pdj.client.screen.search;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import java.util.List;
-import java.util.Map;
+import com.pdj.client.screen.ardoise.ArdoiseActivity;
+import com.pdj.client.R;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,

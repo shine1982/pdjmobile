@@ -1,4 +1,4 @@
-package com.pdj.client;
+package com.pdj.client.screen.search;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,15 +18,16 @@ import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.pdj.client.utils.ModelNames;
+import com.pdj.client.R;
+import com.pdj.client.model.Restaurant;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A fragment representing a list of Items.
@@ -62,16 +63,18 @@ public class RestosFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ModelNames.RESTAURANT);
+        ParseQuery<Restaurant> query = Restaurant.getQuery();
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        query.setMaxCacheAge(TimeUnit.HOURS.toMillis(1)); //cache qui dure 1 hour
         data  = new ArrayList<Map<String,String>>();
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> restoList, ParseException e) {
+        query.findInBackground(new FindCallback<Restaurant>() {
+            public void done(List<Restaurant> restoList, ParseException e) {
                 if (e == null) {
-                    Log.d(ModelNames.RESTAURANT, "Retrieved " + restoList.size() + " restaurants");
-                    for(final ParseObject po:restoList){
+                    Log.d("restos", "Retrieved " + restoList.size() + " restaurants");
+                    for(final Restaurant resto:restoList){
                         Map m = new HashMap();
-                        m.put("name", po.getString("name"));
-                        m.put("id", po.getObjectId());
+                        m.put("name", resto.getName());
+                        m.put("id", resto.getObjectId());
                         data.add(m);
                     }
                     setListAdapter(new RestoLineAdapter(
@@ -82,7 +85,7 @@ public class RestosFragment extends ListFragment {
                             new int[]{R.id.restoNameTextView}
                     ));
                 } else {
-                    Log.d(ModelNames.RESTAURANT, "Error: " + e.getMessage());
+                    Log.d("resto error", "Error: " + e.getMessage());
                 }
             }
         });

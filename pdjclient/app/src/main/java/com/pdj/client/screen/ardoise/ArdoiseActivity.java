@@ -1,4 +1,4 @@
-package com.pdj.client;
+package com.pdj.client.screen.ardoise;
 
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.pdj.client.R;
+import com.pdj.client.model.ardoise.Ardoise;
 
 
 public class ArdoiseActivity extends ActionBarActivity {
@@ -16,9 +19,11 @@ public class ArdoiseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_ardoise);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView textView = (TextView) findViewById(R.id.idOfResto);
+
         String idResto = getIntent().getExtras().getString("idResto");
-        textView.setText(idResto);
+
+      //  textView.setText(idResto);
+
     }
 
 
@@ -40,4 +45,5 @@ public class ArdoiseActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

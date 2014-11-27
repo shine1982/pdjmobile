@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.pdj.client.MainActivity"
+            android:name=".screen.search.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pdj.client.ArdoiseActivity"
+            android:name=".screen.ardoise.ArdoiseActivity"
             android:label="@string/title_activity_ardoise"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".screen.search.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pdj.client.MainActivity" />
+                android:value=".screen.search.MainActivity" />
         </activity>
     </application>
 
