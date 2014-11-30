@@ -20,7 +20,7 @@
 
     <fragment
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:name="com.pdj.client.screen.ardoise.ArdoiseFragment"
         android:id="@+id/fragment2"
         android:layout_below="@id/fragment"

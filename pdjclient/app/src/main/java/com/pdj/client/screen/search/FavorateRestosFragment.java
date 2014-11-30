@@ -1,23 +1,20 @@
 package com.pdj.client.screen.search;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.pdj.client.R;
 import com.pdj.client.model.Restaurant;
+import com.pdj.client.util.FavRestoManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,13 +28,8 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class RestosFragment extends ListFragment {
+public class FavorateRestosFragment extends ListFragment {
 
-    private ListView restoListView;
-    private TextView emptyListTextView;
-    private Button geoBtn;
-    private TextView searchTextView;
-    private Button searchBtn;
 
 
     private List<Map<String,String>> data;
@@ -49,7 +41,7 @@ public class RestosFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public RestosFragment() {
+    public FavorateRestosFragment() {
     }
 
     @Override
@@ -62,7 +54,7 @@ public class RestosFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =
-        inflater.inflate(R.layout.restaurants, container,false);
+                inflater.inflate(R.layout.fragment_favorate_restos, container,false);
         return view;
     }
 
@@ -70,13 +62,13 @@ public class RestosFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ParseQuery<Restaurant> query = Restaurant.getQuery();
-
+        query.whereContainedIn("objectId", FavRestoManager.getInstance(getActivity()).getFavoriteRestoIds());
         data  = new ArrayList<Map<String,String>>();
         query.findInBackground(new FindCallback<Restaurant>() {
-            public void done(List<Restaurant> restoList, ParseException e) {
+            public void done(List<Restaurant> restos, ParseException e) {
                 if (e == null) {
-                    Log.d("restos", "Retrieved " + restoList.size() + " restaurants");
-                    for(final Restaurant resto:restoList){
+                    Log.d("restos", "Retrieved " + restos.size() + " restaurants");
+                    for(final Restaurant resto:restos){
                         Map m = new HashMap();
                         m.put("name", resto.getName());
                         m.put("id", resto.getObjectId());
@@ -143,30 +135,6 @@ public class RestosFragment extends ListFragment {
     }
 
 }
-class RestoLineAdapter extends SimpleAdapter {
-
-    private Context context;
-
-    public RestoLineAdapter(Context context,
-                            List<? extends Map<String, ?>> data,
-                            int resource,
-                            String[] from,
-                            int[] to) {
 
 
-        super(context, data, resource, from, to);
-        this.context = context;
-    }
-/*
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.one_resto_line, parent, false);
 
-        TextView tv = (TextView) v.findViewById(R.id.textView);
-        tv.setText(this.restos.get(position).getName());
-
-        return v;
-    }*/
-}

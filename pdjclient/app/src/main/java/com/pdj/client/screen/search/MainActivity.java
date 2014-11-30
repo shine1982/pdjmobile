@@ -9,12 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.pdj.client.screen.ardoise.ArdoiseActivity;
 import com.pdj.client.R;
+import com.pdj.client.screen.ardoise.ArdoiseActivity;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
-        RestosFragment.OnFragmentInteractionListener
+        RestosFragment.OnFragmentInteractionListener,
+        FavorateRestosFragment.OnFragmentInteractionListener
 {
 
     ViewPager viewPager=null;
@@ -81,7 +82,7 @@ class MainPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i){
             case 0: return new RestosFragment();
-            case 1: return new RestosFragment();
+            case 1: return new FavorateRestosFragment();
 
         }
 

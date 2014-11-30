@@ -20,16 +20,18 @@ public class PdjClientApplication  extends Application {
 
         ParseObject.registerSubclass(Restaurant.class);
         ParseObject.registerSubclass(Ardoise.class);
+        Parse.enableLocalDatastore(this);
 
         // Add your initialization code here
         Parse.initialize(this, "09qsWVn2x6ItvvCuxaDIOmGDoc7aPbAVGLAPOCbZ", "Dv27lV6YAYMt9VlbHcp8IG3mvh2uKyCtBmezHbpq");
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
-
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true);
 
         ParseACL.setDefaultACL(defaultACL, true);
+
+
     }
 }

@@ -7,9 +7,11 @@ import com.parse.ParseQuery;
 
 import com.pdj.client.model.Restaurant;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by fengqin on 14/11/13.
@@ -18,6 +20,7 @@ import java.util.List;
 public class Ardoise extends ParseObject {
 
     public static final String TITLE="title";
+    public static final String DATE="date";
     public static final String FORMULE_PRICE_LIST="formulePriceList";
     public static final String DISHES_BLOC_LIST="dishesBlocList";
     public static final String DISH_LIST="dishList";
@@ -31,6 +34,12 @@ public class Ardoise extends ParseObject {
     public String getTitle() {
         return getString(TITLE);
     }
+
+    public Date getDate(){return getDate(DATE);}
+
+    public String getFormattedDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE 'le 'dd/MM/yyyy", Locale.FRANCE);
+        return simpleDateFormat.format(getDate());}
 
     public List<ArdoiseItem> getFormulePriceList() {
         if(formulePriceList==null){

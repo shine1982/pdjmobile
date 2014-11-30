@@ -28,6 +28,7 @@ import com.pdj.client.model.ardoise.ArdoiseItem;
 import com.pdj.client.util.StringUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -65,34 +66,45 @@ public class ArdoiseFragment extends Fragment {
             restaurant = Restaurant.newRestaurantWithoutData(idResto);
         }
         ParseQuery<Ardoise> query = Ardoise.getFullQuery(restaurant, null);
+
         query.findInBackground(new FindCallback<Ardoise>() {
             public void done(List<Ardoise> ardoises, ParseException e) {
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 if (e == null) {
                     Log.d("ardoises", "Retrieved " + ardoises.size() + " ardoises");
                     if(ardoises.size()>0) {
                         ardoise = ardoises.get(0);
                         updateUI();
+                    }else{
+                        updateUIWhenError();
                     }
                 } else {
                     Log.d("ardoise", "Error: " + e.getMessage());
+                    updateUIWhenError();
                 }
             }
         });
-
+    }
+    private void updateUIWhenError(){
+        TextView titleTextView = (TextView) view.findViewById(R.id.ardoiseTitle);
+        titleTextView.setText("Pas trouvé d'ardoise pour ce restaurant :-(");
     }
     private void updateUI(){
 
-            TextView titleTextView = (TextView) view.findViewById(R.id.ardoiseTitle);
-            SpannableString ardoiseTitle = new SpannableString(ardoise.getTitle());
-            ardoiseTitle.setSpan(new UnderlineSpan(), 0, ardoiseTitle.length(), 0);
-            titleTextView.setText(ardoiseTitle);
+        TextView dateTextView = (TextView) view.findViewById(R.id.ardoiseDate);
+        dateTextView.setText(ardoise.getFormattedDate());
 
-            ArdoiseItemAdapter ardoiseItemAdapter=new ArdoiseItemAdapter(
-                    getActivity(),
-                    ardoise.getAllDatas());
+        TextView titleTextView = (TextView) view.findViewById(R.id.ardoiseTitle);
+        SpannableString ardoiseTitle = new SpannableString(ardoise.getTitle());
+        ardoiseTitle.setSpan(new UnderlineSpan(), 0, ardoiseTitle.length(), 0);
+        titleTextView.setText(ardoiseTitle);
 
-            listView = (ListView) view.findViewById(R.id.listView);
-            listView.setAdapter(ardoiseItemAdapter);
+        ArdoiseItemAdapter ardoiseItemAdapter=new ArdoiseItemAdapter(
+                getActivity(),
+                ardoise.getAllDatas());
+
+        listView = (ListView) view.findViewById(R.id.listView);
+        listView.setAdapter(ardoiseItemAdapter);
 
     }
 }
