@@ -1,14 +1,18 @@
 package com.pdj.client.screen.search;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.pdj.client.R;
 import com.pdj.client.screen.ardoise.ArdoiseActivity;
 
@@ -38,12 +42,38 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        final String[] tabTitles={"Les restaurants", "Mes favoris"};
+
+        final int[] tabTitles={R.drawable.ic_action_home, R.drawable.ic_action_favorite,R.drawable.ic_action_settings,R.drawable.ic_cook};
         for(int i=0;i <tabTitles.length; i++){
             ActionBar.Tab tab =actionBar.newTab();
-            tab.setText(tabTitles[i]);
+            //tab.setText(tabTitles[i]);
+             tab.setIcon(tabTitles[i]);
+
             tab.setTabListener(this);
             actionBar.addTab(tab);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(
+            int requestCode, int resultCode, Intent data) {
+        // Decide what to do based on the original request code
+        switch (requestCode) {
+
+            case RestosFragment.CONNECTION_FAILURE_RESOLUTION_REQUEST :
+            /*
+             * If the result code is Activity.RESULT_OK, try
+             * to connect again
+             */
+                switch (resultCode) {
+                    case Activity.RESULT_OK :
+                    /*
+                     * Try the request again
+                     */
+
+                        break;
+                }
+
         }
     }
 

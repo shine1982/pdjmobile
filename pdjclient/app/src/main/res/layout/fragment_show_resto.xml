@@ -30,35 +30,35 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+Favori"
             android:id="@+id/favoriteRestoButton"
             android:layout_alignBottom="@+id/callResto"
             android:layout_toRightOf="@id/callResto"
             android:layout_toEndOf="@id/callResto"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/ic_like_outline_50"/>
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Appeler"
             android:id="@id/callResto"
             android:layout_alignTop="@id/favoriteRestoButton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/ic_phone_50"/>
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Map"
             android:id="@+id/mapToResto"
             android:layout_alignTop="@id/favoriteRestoButton"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/ic_map_marker_50"/>
     </LinearLayout>
 
 

@@ -2,16 +2,20 @@ package com.pdj.client.screen.ardoise;
 
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.pdj.client.R;
 import com.pdj.client.model.Restaurant;
@@ -27,6 +31,11 @@ public class ShowRestoFragment extends Fragment {
     private static final String FAVORITE_RESTOS="favoriteRestos";
 
     private Restaurant restaurant;
+
+    private ImageButton favoriteRestoButton;
+    private ImageButton callButton;
+    private ImageButton openMapButton;
+
     private View view;
     public ShowRestoFragment() {
         // Required empty public constructor
@@ -54,7 +63,6 @@ public class ShowRestoFragment extends Fragment {
                 if (e == null) {
                     restaurant = resto;
                     updateUI();
-
                 } else {
                     // something went wrong
                     Log.d("resto","non réussi de récpuerer le resto avec l'id"+idResto);
@@ -69,14 +77,16 @@ public class ShowRestoFragment extends Fragment {
         TextView restoAddressTV = (TextView) view.findViewById(R.id.restoAddress);
         restoNameTV.setText(restaurant.getName());
         restoAddressTV.setText(restaurant.getAddress() +", "+restaurant.getPostalCode()+", "+restaurant.getCity());
+
+        setFavoriteButton();
+        setCallButton();
+        setOpenMapButton();
+    }
+    private void setFavoriteButton(){
         final FavRestoManager favRestoManager =  FavRestoManager.getInstance(getActivity());
-
-
-
-
-        final Button favoriteRestoButton = (Button) view.findViewById(R.id.favoriteRestoButton);
+        favoriteRestoButton = (ImageButton) view.findViewById(R.id.favoriteRestoButton);
         boolean ifFav = favRestoManager.isRestoFav(restaurant.getObjectId());
-        favoriteRestoButton.setText((ifFav?"-":"+")+"Favori");
+        favoriteRestoButton.setImageResource(ifFav?R.drawable.ic_like_50:R.drawable.ic_like_outline_50);
 
         favoriteRestoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +103,38 @@ public class ShowRestoFragment extends Fragment {
                     isFavNow = true;
                 }
 
-                favoriteRestoButton.setText((isFavNow?"-":"+")+"Favori");
+                favoriteRestoButton.setImageResource(isFavNow?R.drawable.ic_like_50:R.drawable.ic_like_outline_50);
+
             }
 
         });
+    }
+
+    private void setCallButton(){
+        callButton = (ImageButton) view.findViewById(R.id.callResto);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+restaurant.getTelephone()));
+                startActivity(callIntent);
+            }
+        });
+    }
+
+    private void setOpenMapButton(){
+        openMapButton =(ImageButton) view.findViewById(R.id.mapToResto);
+        openMapButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                String encodedString = Uri.encode(restaurant.getCompleteAddress());
+                Uri geoLocation =Uri.parse("geo:0,0?q="+encodedString);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(geoLocation);
+                startActivity(intent);
+            }
+        });
+
     }
 }
