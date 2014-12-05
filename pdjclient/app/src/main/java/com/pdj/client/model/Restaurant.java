@@ -117,9 +117,7 @@ public class Restaurant extends ParseObject {
         return getParseGeoPoint(LOCATION);
     }
 
-    public String getCompleteAddress(){
-        return getAddress()+","+getPostalCode()+","+getCity()+",France";
-    }
+
 
 
 }

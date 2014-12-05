@@ -16,6 +16,15 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar_50"
+        android:id="@+id/ardoiseCalendarBtn"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp"
+        android:background="@null"/>
+
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ardoiseDate"

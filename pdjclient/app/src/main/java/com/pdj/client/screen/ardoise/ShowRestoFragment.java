@@ -1,24 +1,19 @@
 package com.pdj.client.screen.ardoise;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseQuery;
 import com.pdj.client.R;
-import com.pdj.client.model.Restaurant;
+import com.pdj.client.model.RestaurantBO;
 import com.pdj.client.util.FavRestoManager;
 
 
@@ -27,14 +22,13 @@ import com.pdj.client.util.FavRestoManager;
  */
 public class ShowRestoFragment extends Fragment {
 
-    private static final String ANONYMOUS_USER="anonymous";
-    private static final String FAVORITE_RESTOS="favoriteRestos";
-
-    private Restaurant restaurant;
+    private RestaurantBO restaurant;
 
     private ImageButton favoriteRestoButton;
     private ImageButton callButton;
     private ImageButton openMapButton;
+
+    private RestaurantBoHelper restaurantBoHelper;
 
     private View view;
     public ShowRestoFragment() {
@@ -54,23 +48,27 @@ public class ShowRestoFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final String idResto = getActivity().getIntent().getExtras().getString("idResto");
-
-        //trouvé le resto:
-        ParseQuery<Restaurant> query = Restaurant.getQuery();
-
-        query.getInBackground(idResto, new GetCallback<Restaurant>() {
-            public void done(Restaurant resto, ParseException e) {
-                if (e == null) {
-                    restaurant = resto;
-                    updateUI();
-                } else {
-                    // something went wrong
-                    Log.d("resto","non réussi de récpuerer le resto avec l'id"+idResto);
-                }
-            }
-        });
-
+        restaurant = restaurantBoHelper.getResto();
+        updateUI();
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            restaurantBoHelper = (RestaurantBoHelper) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        restaurantBoHelper = null;
+    }
+
 
     public void updateUI(){
         TextView restoNameTV = (TextView) view.findViewById(R.id.restoNameLabel);
@@ -85,7 +83,7 @@ public class ShowRestoFragment extends Fragment {
     private void setFavoriteButton(){
         final FavRestoManager favRestoManager =  FavRestoManager.getInstance(getActivity());
         favoriteRestoButton = (ImageButton) view.findViewById(R.id.favoriteRestoButton);
-        boolean ifFav = favRestoManager.isRestoFav(restaurant.getObjectId());
+        boolean ifFav = favRestoManager.isRestoFav(restaurant.getId());
         favoriteRestoButton.setImageResource(ifFav?R.drawable.ic_like_50:R.drawable.ic_like_outline_50);
 
         favoriteRestoButton.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +92,7 @@ public class ShowRestoFragment extends Fragment {
 
 
 
-                final String idResto = restaurant.getObjectId();
+                final String idResto = restaurant.getId();
                 boolean isFavNow = false;
                 if(favRestoManager.isRestoFav(idResto)){
                     favRestoManager.removeFavResto(idResto);
@@ -135,6 +133,5 @@ public class ShowRestoFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
 }

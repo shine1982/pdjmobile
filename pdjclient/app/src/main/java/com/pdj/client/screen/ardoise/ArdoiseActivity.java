@@ -1,28 +1,29 @@
 package com.pdj.client.screen.ardoise;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.pdj.client.R;
-import com.pdj.client.model.ardoise.Ardoise;
+import com.pdj.client.model.RestaurantBO;
+import com.pdj.client.screen.search.RestosFragment;
 
 
-public class ArdoiseActivity extends ActionBarActivity {
+public class ArdoiseActivity extends ActionBarActivity implements RestaurantBoHelper {
+
+    private RestaurantBO restaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ardoise);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String idResto = getIntent().getExtras().getString("idResto");
-
-      //  textView.setText(idResto);
+        Intent intent = getIntent();
+        restaurant = (RestaurantBO) intent.getSerializableExtra(RestosFragment.RESTO);
 
     }
 
@@ -46,4 +47,8 @@ public class ArdoiseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public RestaurantBO getResto() {
+        return restaurant;
+    }
 }

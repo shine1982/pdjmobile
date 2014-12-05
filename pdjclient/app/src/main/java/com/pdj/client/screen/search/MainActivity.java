@@ -4,21 +4,18 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.pdj.client.R;
+import com.pdj.client.model.RestaurantBO;
 import com.pdj.client.screen.ardoise.ArdoiseActivity;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
-        RestosFragment.OnFragmentInteractionListener,
         FavorateRestosFragment.OnFragmentInteractionListener
 {
 
@@ -30,6 +27,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setViewPager();
+        setActionBar();
+
+    }
+    private void setViewPager(){
         viewPager = (ViewPager)findViewById(R.id.mainpager);
 
         viewPager.setAdapter(new MainPageAdapter(getSupportFragmentManager()));
@@ -39,16 +42,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 actionBar.setSelectedNavigationItem(i);
             }
         });
+    }
 
+    private void setActionBar(){
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         final int[] tabTitles={R.drawable.ic_action_home, R.drawable.ic_action_favorite,R.drawable.ic_action_settings,R.drawable.ic_cook};
         for(int i=0;i <tabTitles.length; i++){
             ActionBar.Tab tab =actionBar.newTab();
-            //tab.setText(tabTitles[i]);
-             tab.setIcon(tabTitles[i]);
-
+            tab.setIcon(tabTitles[i]);
             tab.setTabListener(this);
             actionBar.addTab(tab);
         }
@@ -82,22 +85,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         viewPager.setCurrentItem(tab.getPosition());
     }
-
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
-
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
-        final String idResto = id;
+    public void onFragmentInteraction(RestaurantBO restaurantBO) {
         Intent intent = new Intent(this, ArdoiseActivity.class);
-        intent.putExtra("idResto", idResto);
+        intent.putExtra(RestosFragment.RESTO, restaurantBO);
         startActivity(intent);
     }
 }

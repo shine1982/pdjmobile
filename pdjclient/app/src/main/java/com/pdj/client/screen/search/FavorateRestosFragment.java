@@ -14,6 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.pdj.client.R;
 import com.pdj.client.model.Restaurant;
+import com.pdj.client.model.RestaurantBO;
 import com.pdj.client.util.FavRestoManager;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class FavorateRestosFragment extends ListFragment {
 
     private List<Map<String,String>> data;
 
+    private Map<String, RestaurantBO> restoMap= new HashMap<String, RestaurantBO>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,11 +70,13 @@ public class FavorateRestosFragment extends ListFragment {
             public void done(List<Restaurant> restos, ParseException e) {
                 if (e == null) {
                     Log.d("restos", "Retrieved " + restos.size() + " restaurants");
+                    restoMap.clear();
                     for(final Restaurant resto:restos){
                         Map m = new HashMap();
                         m.put("name", resto.getName());
                         m.put("id", resto.getObjectId());
                         data.add(m);
+                        restoMap.put(resto.getObjectId(),new RestaurantBO(resto));
                     }
                     setListAdapter(new RestoLineAdapter(
                             getActivity(),
@@ -115,7 +119,7 @@ public class FavorateRestosFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(data.get(position).get("id"));
+            mListener.onFragmentInteraction(restoMap.get(data.get(position).get("id")));
         }
     }
 
@@ -131,7 +135,7 @@ public class FavorateRestosFragment extends ListFragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onFragmentInteraction(RestaurantBO restoBo);
     }
 
 }

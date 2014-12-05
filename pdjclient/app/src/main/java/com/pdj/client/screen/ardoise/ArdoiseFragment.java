@@ -1,13 +1,12 @@
 package com.pdj.client.screen.ardoise;
 
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,12 +23,14 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.pdj.client.R;
 import com.pdj.client.model.Restaurant;
+import com.pdj.client.model.RestaurantBO;
 import com.pdj.client.model.ardoise.Ardoise;
 import com.pdj.client.model.ardoise.ArdoiseItem;
+import com.pdj.client.screen.search.RestosFragment;
+import com.pdj.client.util.DateUtils;
 import com.pdj.client.util.StringUtils;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -36,11 +38,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class ArdoiseFragment extends Fragment {
 
-    private Restaurant restaurant;
+    public static final String RESTO_NAME="restoName";
+
+    private RestaurantBO restaurantBO;
     private View view;
     private Ardoise ardoise;
     private ListView listView;
-
+    private ImageButton calendarBtn;
+    private RestaurantBoHelper restaurantBoHelper;
     public ArdoiseFragment() {
         // Required empty public constructor
     }
@@ -61,11 +66,10 @@ public class ArdoiseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(restaurant==null){
-            final String idResto = getActivity().getIntent().getExtras().getString("idResto");
-            restaurant = Restaurant.newRestaurantWithoutData(idResto);
+        if(restaurantBO==null){
+            restaurantBO= restaurantBoHelper.getResto();
         }
-        ParseQuery<Ardoise> query = Ardoise.getFullQuery(restaurant, null);
+        ParseQuery<Ardoise> query = Ardoise.getFullQuery(Restaurant.newRestaurantWithoutData(restaurantBO.getId()), DateUtils.getToday(),1);
 
         query.findInBackground(new FindCallback<Ardoise>() {
             public void done(List<Ardoise> ardoises, ParseException e) {
@@ -84,10 +88,11 @@ public class ArdoiseFragment extends Fragment {
                 }
             }
         });
+        setCalendarBtn();
     }
     private void updateUIWhenError(){
         TextView titleTextView = (TextView) view.findViewById(R.id.ardoiseTitle);
-        titleTextView.setText("Pas trouvé d'ardoise pour ce restaurant :-(");
+        titleTextView.setText("Pas trouvé d'ardoise pour aujourd'hui. Cliquez le button calendrier pour visualiser les ardoises d'autres dates");
     }
     private void updateUI(){
 
@@ -107,6 +112,38 @@ public class ArdoiseFragment extends Fragment {
         listView.setAdapter(ardoiseItemAdapter);
 
     }
+
+    private void setCalendarBtn(){
+        calendarBtn = (ImageButton) view.findViewById(R.id.ardoiseCalendarBtn);
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ArdoiseNavActivity.class);
+                intent.putExtra(RestosFragment.RESTO, restaurantBO);
+                startActivity(intent);
+            }
+        });
+
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            restaurantBoHelper = (RestaurantBoHelper) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        restaurantBoHelper = null;
+    }
+
+
+
 }
 
 class ArdoiseItemAdapter extends ArrayAdapter<ArdoiseItem> {
@@ -150,4 +187,5 @@ class ArdoiseItemAdapter extends ArrayAdapter<ArdoiseItem> {
             }
             return v;
     }
+
 }

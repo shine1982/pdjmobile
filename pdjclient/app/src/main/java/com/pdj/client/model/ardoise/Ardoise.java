@@ -39,7 +39,13 @@ public class Ardoise extends ParseObject {
 
     public String getFormattedDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE 'le 'dd/MM/yyyy", Locale.FRANCE);
-        return simpleDateFormat.format(getDate());}
+        return simpleDateFormat.format(getDate());
+    }
+
+    public String getFormattedShortDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        return simpleDateFormat.format(getDate());
+    }
 
     public List<ArdoiseItem> getFormulePriceList() {
         if(formulePriceList==null){
@@ -144,12 +150,14 @@ public class Ardoise extends ParseObject {
         return ParseQuery.getQuery(Ardoise.class);
     }
 
-    public static ParseQuery<Ardoise> getFullQuery(final Restaurant resto, final Date date) {
+    public static ParseQuery<Ardoise> getFullQuery(final Restaurant resto, final Date date, final int resultLimite) {
         final ParseQuery<Ardoise> fullQuery = ParseQuery.getQuery(Ardoise.class);
+        fullQuery.setLimit(resultLimite);
         fullQuery.include(FORMULE_PRICE_LIST);
         fullQuery.include(DISHES_BLOC_LIST);
         fullQuery.include(DISH_LIST);
         fullQuery.include(TEXT_LIST);
+        fullQuery.orderByDescending(DATE);
         if(resto!=null){
             fullQuery.whereEqualTo("resto",resto);
         }
