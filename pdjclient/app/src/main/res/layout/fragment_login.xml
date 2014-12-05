@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.pdj.client.screen.compteclient.LoginFragment"
+    >
+
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Email"
+        android:id="@+id/emailTitle"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailInput"
+        android:layout_below="@id/emailTitle"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mot de passe"
+        android:id="@+id/passwordTitle"
+        android:layout_below="@id/emailInput"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordInput"
+        android:layout_below="@id/passwordTitle"
+     />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/validLogin"
+        android:text="LOGIN"
+        android:textSize="10pt"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_blue_light"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/passwordInput"/>
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pas encore membre? Inscrivez vous gratuitement sur le site leplatdujour.fr pour recevoir les promotions réservées que pour nos membres.!"
+        android:id="@+id/clientSgnupText"
+        android:layout_below="@id/validLogin"
+        android:layout_marginTop="20dp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/clientInscrire"
+        android:text="Inscrire"
+        android:textSize="8pt"
+        android:textColor="@android:color/holo_blue_light"
+        android:background="@null"
+        android:layout_below="@id/clientSgnupText"
+        />
+
+
+</RelativeLayout>

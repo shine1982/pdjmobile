@@ -9,6 +9,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
+        android:textSize="8pt"
 
         />
 
@@ -25,5 +26,6 @@
         android:text="N'existe pas de restaurants favorisés"
         android:layout_margin="5dp"
         android:layout_marginTop="25dp"
+        android:textSize="8pt"
         />
 </FrameLayout>

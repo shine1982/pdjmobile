@@ -13,14 +13,18 @@ import android.support.v7.app.ActionBarActivity;
 import com.pdj.client.R;
 import com.pdj.client.model.RestaurantBO;
 import com.pdj.client.screen.ardoise.ArdoiseActivity;
+import com.pdj.client.screen.compteclient.LoginFragment;
+import com.pdj.client.screen.restaurateur.RestaurateurFragment;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
         FavorateRestosFragment.OnFragmentInteractionListener
 {
 
-    ViewPager viewPager=null;
-    ActionBar actionBar = null;
+    private ViewPager viewPager=null;
+    private ActionBar actionBar = null;
+    private int[] tabTitles={R.drawable.ic_action_home, R.drawable.ic_action_favorite,R.drawable.ic_action_settings,R.drawable.ic_cook};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        final int[] tabTitles={R.drawable.ic_action_home, R.drawable.ic_action_favorite,R.drawable.ic_action_settings,R.drawable.ic_cook};
         for(int i=0;i <tabTitles.length; i++){
             ActionBar.Tab tab =actionBar.newTab();
             tab.setIcon(tabTitles[i]);
@@ -113,6 +116,8 @@ class MainPageAdapter extends FragmentPagerAdapter {
         switch (i){
             case 0: return new RestosFragment();
             case 1: return new FavorateRestosFragment();
+            case 2: return new LoginFragment();
+            case 3: return new RestaurateurFragment();
 
         }
 
@@ -121,7 +126,7 @@ class MainPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 4;
     }
 
 
