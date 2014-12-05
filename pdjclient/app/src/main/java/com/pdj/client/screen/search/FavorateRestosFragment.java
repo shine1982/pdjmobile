@@ -72,7 +72,7 @@ public class FavorateRestosFragment extends ListFragment {
                     Log.d("restos", "Retrieved " + restos.size() + " restaurants");
                     restoMap.clear();
                     for(final Restaurant resto:restos){
-                        Map m = new HashMap();
+                        Map<String, String> m = new HashMap<String, String>();
                         m.put("name", resto.getName());
                         m.put("id", resto.getObjectId());
                         data.add(m);
@@ -134,7 +134,7 @@ public class FavorateRestosFragment extends ListFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         public void onFragmentInteraction(RestaurantBO restoBo);
     }
 
