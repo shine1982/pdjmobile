@@ -23,7 +23,7 @@ public class PdjClientApplication  extends Application {
         Parse.enableLocalDatastore(this);
 
         // Add your initialization code here
-        Parse.initialize(this, "09qsWVn2x6ItvvCuxaDIOmGDoc7aPbAVGLAPOCbZ", "Dv27lV6YAYMt9VlbHcp8IG3mvh2uKyCtBmezHbpq");
+        Parse.initialize(this, "ZLxMvsT2sDIrF2U2hOGCH9hjTmHbDWWOBerBe4Wm", "FdwOP8l78j8ziIyRTOFcv9eWNUCuipCQyVLIoEER");
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
