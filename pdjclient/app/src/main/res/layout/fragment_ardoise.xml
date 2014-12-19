@@ -16,19 +16,11 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_calendar_50"
-        android:id="@+id/ardoiseCalendarBtn"
-        android:paddingRight="30dp"
-        android:paddingBottom="30dp"
-        android:background="@null"/>
 
     <TextView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ardoiseDate"
-        android:gravity="right"
+        android:gravity="left"
         android:text=""
         android:textColor="@android:color/white"/>
 
@@ -39,6 +31,16 @@
         android:gravity="center_horizontal"
         android:text="Chargement ardoise..."
         android:textColor="@android:color/white"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar_50"
+        android:id="@+id/ardoiseCalendarBtn"
+        android:paddingBottom="30dp"
+        android:layout_gravity="right"
+        android:background="@null"/>
+
 
     <ListView
         android:layout_width="wrap_content"

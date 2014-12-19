@@ -5,37 +5,29 @@
     android:layout_height="match_parent">
 
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/geoButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="2dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_action_place"
-        />
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchText"
-        android:layout_alignBottom="@id/geoButton"
-        android:layout_toRightOf="@id/geoButton"
-        android:layout_toLeftOf="@+id/searchBtn"
-        android:layout_toStartOf="@+id/searchBtn" />
-
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/geoButton"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/searchBtn"
-        android:layout_alignBottom="@id/geoButton"
+        android:id="@id/geoButton"
+        android:layout_alignBottom="@id/searchText"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/ic_action_search"
-        />
+        android:baselineAlignBottom="@id/searchText"
+        android:src="@drawable/ic_action_place"
+     />
+
 
     <TextView
         android:layout_width="wrap_content"

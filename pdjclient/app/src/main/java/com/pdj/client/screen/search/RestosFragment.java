@@ -84,7 +84,7 @@ public class RestosFragment extends Fragment implements
     private ListView restoListView;
     private ImageButton geoBtn;
     private EditText searchTextView;
-    private ImageButton searchBtn;
+  //  private ImageButton searchBtn;
 
     // A request to connect to Location Services
     private LocationRequest mLocationRequest;
@@ -149,8 +149,9 @@ public class RestosFragment extends Fragment implements
             }
         });
 
-        searchBtn = (ImageButton)viewFragement.findViewById(R.id.searchBtn);
+       // searchBtn = (ImageButton)viewFragement.findViewById(R.id.searchBtn);
         searchTextView = (EditText)viewFragement.findViewById(R.id.searchText);
+       /*
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,13 +165,7 @@ public class RestosFragment extends Fragment implements
 
 
                                 ParseQuery<Restaurant> restaurantQuery = Restaurant.getQueryFromStr(searchStr);
-                                /*
-                                ParseGeoPoint geoPoint = getLocationFromAddress(getActivity(),searchStr);
-                                if(geoPoint!=null){
-                                    currentLocation = new Location("dummyprovider");
-                                    currentLocation.setLatitude(geoPoint.getLatitude());
-                                    currentLocation.setLongitude(geoPoint.getLongitude());
-                                }*/
+
                                 restaurantQuery.setLimit(MAX_POST_SEARCH_RESULTS);
                                 return restaurantQuery;
                             }
@@ -181,7 +176,7 @@ public class RestosFragment extends Fragment implements
 
                 }
             }
-        });
+        });*/
 
 
         ParseQueryAdapter.QueryFactory<Restaurant> factory =

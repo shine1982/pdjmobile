@@ -12,6 +12,7 @@ import com.parse.ParseQuery;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class Restaurant extends ParseObject {
         BigDecimal bd = new BigDecimal(distance);
         int decimalPlaces = 3;  // the scale for the decimal
         bd = bd.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-        DecimalFormat decFormat = new DecimalFormat("#.00");
+        DecimalFormat decFormat = new DecimalFormat("#.00", new DecimalFormatSymbols(Locale.ENGLISH));
         double formatDecimal = new Double(decFormat.format(distance)).doubleValue();
         return formatDecimal+" km";
     }
